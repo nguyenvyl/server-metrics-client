@@ -9,7 +9,7 @@ package com.programmerscuriosity.client;
  *
  * @author Vy
  */
-public class RequestMetrics {
+public class RequestMetrics implements Comparable<RequestMetrics> {
    private String requestType;
    private double responseTime;
    private double dbQueryTime;
@@ -73,6 +73,11 @@ public class RequestMetrics {
     public void setServerId(String serverId) {
         this.serverId = serverId;
     }
-    
-    
+
+
+    @Override
+    public int compareTo(RequestMetrics requestMetrics) {
+        Double result = this.responseTime - requestMetrics.getResponseTime();
+        return result.intValue();
+    }
 }
