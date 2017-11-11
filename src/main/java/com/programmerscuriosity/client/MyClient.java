@@ -18,8 +18,9 @@ public class MyClient {
     private static Map<String, List<RequestMetrics>> instanceMetrics = new HashMap<>();
     
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException, IOException, Exception {
+    public static void main(String[] args) {
 
+        // Get list of server metrics from each instance
         for(String url : urls){
             List<RequestMetrics> metrics = callGET(url);
             instanceMetrics.put(url, metrics);
@@ -37,7 +38,7 @@ public class MyClient {
 
     }
 
-
+    // Retrieves the list of server metrics from an instance
     public static List<RequestMetrics> callGET(String url) {
         List<RequestMetrics> metrics = new ArrayList<>();
         Client client = ClientBuilder.newClient();
@@ -56,6 +57,7 @@ public class MyClient {
         return metrics;
     }
 
+    // Calculates all stats for a list ot metrics by POST request, GET request, and combined GET and POST
     private static void calculateAllMetrics(List<RequestMetrics> list) {
         Map<String, List<RequestMetrics>> sortedMetrics = separateGETandPOST(list);
         System.out.println("Metrics for all POST requests: ");
@@ -117,6 +119,7 @@ public class MyClient {
         });
     }
 
+    // Separates a list of metrics by request type, either GET or POST.
     private static Map<String, List<RequestMetrics>> separateGETandPOST(List<RequestMetrics> metricsList) {
         List<RequestMetrics> getMetrics = new ArrayList<>();
         List<RequestMetrics> postMetrics = new ArrayList<>();
